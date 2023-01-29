@@ -8,6 +8,12 @@
 #include <string.h>
 #include <math.h>
 
+#define PWM_PERIOD 400000 // PWM period of 50 Hz
+#define ADC_RANGE  4096    // 12-bit ADC range
+
+#define NUM_PWM_CHANNELS 3
+#define NUM_ADC_CHANNELS 3
+
 #define _40MHZ 9
 #define _20MHZ 19
 #define _10MHZ 39
