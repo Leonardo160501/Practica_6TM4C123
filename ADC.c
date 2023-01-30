@@ -48,23 +48,18 @@ extern void Configura_Reg_ADC0(void)
    ADC0->ACTSS = (1<<2);
    ADC0->PSSI |= (1<<2);
    */
-      // Enable clock for ADC0
-    SYSCTL->RCGCADC |= (1 << 0);
+      // Enable the ADC clock
+    SYSCTL->RCGCADC |= 0x1;
 
-    // Enable clock for port E
-    SYSCTL->RCGCGPIO |= (1 << 4);
-
-    // Set pin E1 as ADC input
-    GPIOE->AFSEL |= (1 << 1) | (1<<2) | (1<<3);
-    GPIOE->DEN &= ~(1 << 1) | (1<<2) | (1<<3);
-
-    // Configure ADC to sample on PE1
-    ADC0->ACTSS &= ~(1<<3);
-    ADC0->EMUX &= ~(0xF << 12);
-    ADC0->SSMUX3 = (2 << 0) | (1 << 4) | (0 << 8); 
-    ADC0->SSCTL3 = (1<<2) | (1<<1) | (1<<0);
-    ADC0->IM |= (1<<3);
-    ADC0->ACTSS |= (1<<3);
+    // Configure ADC sequencer 0 for 2 channels
+    ADC0->ACTSS &= ~0x1;
+    ADC0->EMUX = (ADC0->EMUX & ~0xF) | 0x5;
+    ADC0->SSMUX0 = 0x000A;
+    ADC0->SSMUX1 = 0x000B;
+    ADC0->SSCTL0 = 0x6;
+    ADC0->SSCTL1 = 0x6;
+    ADC0->IM |= 0x3;
+    ADC0->ACTSS |= 0x1;
 
 }
 
